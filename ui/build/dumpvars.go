@@ -118,16 +118,34 @@ var BannerVars = []string{
 	"WITH_GMS",
 }
 
+// Colors to use for the top banner
+var Color_Red = "\033[31m"
+var Color_Green = "\033[32m"
+var Color_Yellow = "\033[33m"
+var Color_Blue = "\033[34m"
+var Color_Magenta = "\033[35m"
+var Color_Cyan = "\033[36m"
+var Color_White = "\033[37m"
+var Color_Bold = "\033[1m"
+var Color_Reset = "\033[0m"
+
 func Banner(make_vars map[string]string) string {
 	b := &bytes.Buffer{}
 
-	fmt.Fprintln(b, "============================================")
+	fmt.Fprintln(b, Color_White + "=============================================================================" + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "   █████╗ ██╗  ████████╗ █████╗ ██╗██████╗     ██████╗  ██████╗ ███╗   ███╗  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██╔══██╗██║  ╚══██╔══╝██╔══██╗██║██╔══██╗    ██╔══██╗██╔═══██╗████╗ ████║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ███████║██║     ██║   ███████║██║██████╔╝    ██████╔╝██║   ██║██╔████╔██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██╔══██║██║     ██║   ██╔══██║██║██╔══██╗    ██╔══██╗██║   ██║██║╚██╔╝██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██║  ██║███████╗██║   ██║  ██║██║██║  ██║    ██║  ██║╚██████╔╝██║ ╚═╝ ██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝  " + Color_Reset)
+	fmt.Fprintln(b, Color_White + "=============================================================================" + Color_Reset)
 	for _, name := range BannerVars {
 		if make_vars[name] != "" {
-			fmt.Fprintf(b, "%s=%s\n", name, make_vars[name])
+			fmt.Fprintf(b, Color_White + "  %s = " + Color_Bold + Color_Green + "%s" + Color_Reset + "\n", name, make_vars[name])
 		}
 	}
-	fmt.Fprint(b, "============================================")
+	fmt.Fprint(b, Color_White + "=============================================================================" + Color_Reset)
 
 	return b.String()
 }
