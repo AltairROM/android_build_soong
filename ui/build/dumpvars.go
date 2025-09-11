@@ -180,22 +180,50 @@ var BannerVars = []string{
 	"PRODUCT_SOONG_NAMESPACES",
 }
 
+var BannerVarsMini = []string{
+	"PLATFORM_VERSION_CODENAME",
+	"PLATFORM_VERSION",
+	"LINEAGE_VERSION",
+	"TARGET_DEVICE",
+	"TARGET_BUILD_VARIANT",
+	"TARGET_BUILD_APPS",
+	"BUILD_ID",
+	"OUT_DIR",
+}
+
+// Colors to use for the top banner
+var Color_Red = "\033[31m"
+var Color_Green = "\033[32m"
+var Color_Yellow = "\033[33m"
+var Color_Blue = "\033[34m"
+var Color_Magenta = "\033[35m"
+var Color_Cyan = "\033[36m"
+var Color_White = "\033[37m"
+var Color_Bold = "\033[1m"
+var Color_Reset = "\033[0m"
+
 func Banner(config Config, make_vars map[string]string) string {
 	b := &bytes.Buffer{}
 
-	fmt.Fprintln(b, "============================================")
-	for _, name := range BannerVars {
+	fmt.Fprintln(b, Color_White + "=============================================================================" + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "   █████╗ ██╗  ████████╗ █████╗ ██╗██████╗     ██████╗  ██████╗ ███╗   ███╗  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██╔══██╗██║  ╚══██╔══╝██╔══██╗██║██╔══██╗    ██╔══██╗██╔═══██╗████╗ ████║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ███████║██║     ██║   ███████║██║██████╔╝    ██████╔╝██║   ██║██╔████╔██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██╔══██║██║     ██║   ██╔══██║██║██╔══██╗    ██╔══██╗██║   ██║██║╚██╔╝██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ██║  ██║███████╗██║   ██║  ██║██║██║  ██║    ██║  ██║╚██████╔╝██║ ╚═╝ ██║  " + Color_Reset)
+	fmt.Fprintln(b, Color_Blue + "  ╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝  " + Color_Reset)
+	fmt.Fprintln(b, Color_White + "=============================================================================" + Color_Reset)
+	for _, name := range BannerVarsMini {
 		if make_vars[name] != "" {
-			fmt.Fprintf(b, "%s=%s\n", name, make_vars[name])
-		}
+			fmt.Fprintf(b, Color_White + "  %s = " + Color_Bold + Color_Green + "%s" + Color_Reset + "\n", name, make_vars[name])		}
 	}
 	if config.skipKatiControlledByFlags {
-		fmt.Fprintf(b, "SOONG_ONLY=%t\n", config.soongOnlyRequested)
+		fmt.Fprintf(b, Color_White + "  SOONG_ONLY = " + Color_Bold + Color_Green + "%t" + Color_Reset + "\n", config.soongOnlyRequested)
 	} else { // default for this product
-		fmt.Fprintf(b, "SOONG_ONLY=%t\n", make_vars["PRODUCT_SOONG_ONLY"] == "true")
+		fmt.Fprintf(b, Color_White + "  SOONG_ONLY = " + Color_Bold + Color_Green + "%t" + Color_Reset + "\n", make_vars["PRODUCT_SOONG_ONLY"] == "true")
 	}
 
-	fmt.Fprint(b, "============================================")
+	fmt.Fprintln(b, Color_White + "=============================================================================" + Color_Reset)
 
 	return b.String()
 }
